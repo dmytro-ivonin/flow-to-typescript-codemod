@@ -34,7 +34,7 @@ To try out this codemod on your codebase, you'll want to clone this repository a
 
 ```bash
 # Clone the repository
-git clone https://github.com/stripe-archive/flow-to-typescript-codemod.git
+git clone https://github.com/dmytro-ivonin/flow-to-typescript-codemod.git
 cd flow-to-typescript-codemod/
 
 # Install dependencies
