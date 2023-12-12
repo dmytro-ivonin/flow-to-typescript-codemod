@@ -22,10 +22,18 @@ export function migrateFunctionParameters(
   }
   const params = flowType.params.map<t.Identifier | t.RestElement>(
     (flowParam, i) => {
+
+      const makeFirstLetterInLowerCase = (inputString: string): string =>
+         inputString.charAt(0).toLowerCase() + inputString.slice(1);
+
       const tsParam = buildTSIdentifier(
         // If a Flow function type argument doesn’t have a name we call it `argN`. This
         // matches the JavaScript convention of calling function inputs “arguments”.
-        flowParam.name ? flowParam.name.name : `arg${i + 1}`,
+        flowParam.name != null
+            ? flowParam.name.name
+            : flowParam.typeAnnotation?.id?.name != null && flowParam.typeAnnotation.id.name.length > 0
+                ? makeFirstLetterInLowerCase(flowParam.typeAnnotation.id.name)
+                : `arg${i + 1}`,
         !flowType.params.some(
           (p, j) =>
             // if the remaining array has any non-optional parameters, then do no mark as optional
